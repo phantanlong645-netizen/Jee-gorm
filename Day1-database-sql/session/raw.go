@@ -48,7 +48,6 @@ func (s *Session) QueryRows() (rows *sql.Rows, err error) {
 }
 
 func (s *Session) Raw(sql string, args ...interface{}) *Session {
-
 	s.sql.WriteString(sql)
 	s.sql.WriteString(" ")
 	s.sqlVars = append(s.sqlVars, args...)
