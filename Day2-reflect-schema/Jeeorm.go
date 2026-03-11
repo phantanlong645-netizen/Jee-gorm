@@ -1,6 +1,7 @@
 package Day2_reflect_schema
 
 import (
+	"Day2_reflect_schema/dialect"
 	"Day2_reflect_schema/log"
 	"Day2_reflect_schema/session"
 	"database/sql"
@@ -9,7 +10,8 @@ import (
 )
 
 type Engine struct {
-	db *sql.DB
+	db      *sql.DB
+	dialect dialect.Dialect
 }
 
 func NewEngine(driver, source string) (e *Engine, err error) {
@@ -35,5 +37,5 @@ func (e *Engine) Close() {
 	log.Info("Close database success")
 }
 func (e *Engine) NewSession() *session.Session {
-	return session.NewSession(e.db)
+	return session.New(e.db, e.dialect)
 }
