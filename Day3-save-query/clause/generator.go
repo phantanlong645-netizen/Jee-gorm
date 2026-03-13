@@ -54,7 +54,7 @@ func _where(values ...interface{}) (string, []interface{}) {
 	return fmt.Sprintf("WHERE %s", desc), vars
 }
 func _orderBy(values ...interface{}) (string, []interface{}) {
-	return fmt.Sprintf("Order by %s", values[0]), []interface{}{}
+	return fmt.Sprintf("ORDER BY %s", values[0]), []interface{}{}
 }
 func _values(values ...interface{}) (string, []interface{}) {
 	var bindStr string
