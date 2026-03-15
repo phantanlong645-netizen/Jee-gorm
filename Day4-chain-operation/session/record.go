@@ -1,7 +1,7 @@
 package session
 
 import (
-	"Day3-save-query/clause"
+	"Jee-xorm/Day4-chain-operation/clause"
 	"reflect"
 )
 
