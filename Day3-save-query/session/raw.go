@@ -1,6 +1,7 @@
 package session
 
 import (
+	"Day3-save-query/clause"
 	"database/sql"
 	"strings"
 
@@ -14,6 +15,7 @@ type Session struct {
 	refTable *schema.Schema
 	sql      strings.Builder
 	sqlVars  []interface{}
+	clause   clause.Clause
 }
 
 func New(db *sql.DB, dialect dialect.Dialect) *Session {
