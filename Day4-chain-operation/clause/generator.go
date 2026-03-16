@@ -2,6 +2,7 @@ package clause
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -31,7 +32,7 @@ func init() {
 	generators[LIMIT] = _limit
 	generators[WHERE] = _where
 	generators[ORDERBY] = _orderBy
-	//generators[UPDATE] = _update
+	generators[UPDATE] = _update
 	generators[DELETE] = _delete
 	generators[COUNT] = _count
 }
@@ -81,12 +82,28 @@ func _values(values ...interface{}) (string, []interface{}) {
 	return sql.String(), vars
 }
 
-//func _update(values ...interface{}) (string, []interface{}) {}
-
 func _delete(values ...interface{}) (string, []interface{}) {
 	return fmt.Sprintf("DELETE FROM %s", values[0]), []interface{}{}
 }
 
 func _count(values ...interface{}) (string, []interface{}) {
 	return _select(values[0], []string{"count(*)"})
+}
+func _update(values ...interface{}) (string, []interface{}) {
+	tableName := values[0]
+	m := values[1].(map[string]interface{})
+	var sortkeys []string
+	for k, _ := range m {
+		sortkeys = append(sortkeys, k)
+	}
+	sort.Strings(sortkeys)
+	var keys []string
+	var valuess []interface{}
+	for _, k := range sortkeys {
+		v := m[k]
+		keys = append(keys, k+" = ?")
+		valuess = append(valuess, v)
+	}
+	key := strings.Join(keys, ",")
+	return fmt.Sprintf("UPDATE %s SET %s", tableName, key), valuess
 }

@@ -6,8 +6,7 @@ import (
 	"testing"
 
 	"Jee-xorm/Day4-chain-operation/dialect"
-
-	_ "modernc.org/sqlite"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var (
@@ -17,7 +16,7 @@ var (
 
 func TestMain(m *testing.M) {
 	var err error
-	TestDB, err = sql.Open("sqlite", "../gee.db")
+	TestDB, err = sql.Open("sqlite3", "../gee.db")
 	if err != nil {
 		panic(err)
 	}
